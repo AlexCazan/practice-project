@@ -22,7 +22,9 @@ jobs:
         with:
           node-version: "18"
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install eslint --save-dev
       - name: Format code
         run: eslint --ext .jsx --fix src
   test:
@@ -35,9 +37,11 @@ jobs:
         with:
           node-version: "18"
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install --save-dev vitest
       - name: Run tests
-        run: vitest run
+        run: npx vitest run
   build:
     runs-on: ubuntu-latest
     steps:
@@ -51,5 +55,5 @@ jobs:
         run: npm install
       - name: Build application
         run: |
-          vite build
+          npx vite build
           echo "Build completed"
