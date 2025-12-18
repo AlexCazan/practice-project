@@ -1,56 +1,26 @@
 name: Deploy Project
 on: push
 jobs:
-  install-dependencies:
+  continuos-integration:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Install NodeJS
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+
       - name: Install dependencies
         run: npm install
-  format-code:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-      - name: Install dependencies
-        run: npm install
-      - name: Format code
-        run: npx eslint --ext .jsx --fix src
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install --save-dev vitest
+
+      - name: Lint & format code
+        run: npx eslint --ext .jsx src
+
       - name: Run tests
         run: npx vitest run
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-      - name: Install dependencies
-        run: npm install
+
       - name: Build application
         run: |
           npx vite build
