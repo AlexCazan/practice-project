@@ -22,11 +22,9 @@ jobs:
         with:
           node-version: "18"
       - name: Install dependencies
-        run: |
-          npm install
-          npm install eslint --save-dev
+        run: npm install
       - name: Format code
-        run: eslint --ext .jsx --fix src
+        run: npx eslint --ext .jsx --fix src
   test:
     runs-on: ubuntu-latest
     steps:
